@@ -682,13 +682,14 @@ function App() {
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/login-ts" element={<TypeScriptLogin />} />
+            <Route path="/hotels" element={<LuxuryHotels />} />
             <Route path="/register" element={<Register />} />
             <Route path="/dashboard" element={
               <ProtectedRoute>
                 <Dashboard />
               </ProtectedRoute>
             } />
-            <Route path="/" element={<Navigate to="/login" />} />
+            <Route path="/" element={<Navigate to="/hotels" />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>
