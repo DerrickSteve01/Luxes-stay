@@ -222,11 +222,10 @@ metadata:
 
 test_plan:
   current_focus:
-    - "User Authentication System"
-    - "User Registration Endpoint"
-    - "User Login Endpoint"
     - "Login Form with Validation"
     - "Registration Form with Validation"
+    - "Authentication Context and State Management"
+    - "Protected Routes and Dashboard"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
