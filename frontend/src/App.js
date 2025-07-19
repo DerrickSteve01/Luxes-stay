@@ -603,6 +603,12 @@ const Dashboard = () => {
               <h1 className="text-xl font-semibold text-gray-900">Dashboard</h1>
             </div>
             <div className="flex items-center space-x-4">
+              <button
+                onClick={() => navigate('/hotels')}
+                className="bg-gradient-to-r from-yellow-600 to-amber-600 text-white px-4 py-2 rounded-lg hover:from-yellow-700 hover:to-amber-700 transition-colors font-medium"
+              >
+                View Hotels
+              </button>
               <span className="text-sm text-gray-700">
                 Welcome, {user?.first_name} {user?.last_name}
               </span>
