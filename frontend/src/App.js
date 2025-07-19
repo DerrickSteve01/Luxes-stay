@@ -690,6 +690,11 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/login-ts" element={<TypeScriptLogin />} />
             <Route path="/hotels" element={<LuxuryHotels />} />
+            <Route path="/reservation" element={
+              <ProtectedRoute>
+                <HotelReservation />
+              </ProtectedRoute>
+            } />
             <Route path="/register" element={<Register />} />
             <Route path="/dashboard" element={
               <ProtectedRoute>
