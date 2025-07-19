@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios, { AxiosError } from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 // TypeScript interfaces
 interface Hotel {
