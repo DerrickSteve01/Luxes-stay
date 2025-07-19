@@ -77,6 +77,17 @@ class StatusCheck(BaseModel):
 class StatusCheckCreate(BaseModel):
     client_name: str
 
+class Hotel(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    name: str
+    location: str
+    rating: float  # 1-5 stars
+    price_tier: str  # "Luxury", "Ultra-Luxury", "Presidential"
+    thumbnail_image: str
+    description: str
+    amenities: List[str]
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
 # Helper functions
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
