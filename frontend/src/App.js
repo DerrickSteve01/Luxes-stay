@@ -680,6 +680,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/login" element={<Login />} />
+            <Route path="/login-ts" element={<TypeScriptLogin />} />
             <Route path="/register" element={<Register />} />
             <Route path="/dashboard" element={
               <ProtectedRoute>
