@@ -380,6 +380,87 @@ async def get_hotels():
     
     return luxury_hotels
 
+@api_router.post("/reservations", response_model=ReservationResponse)
+async def create_reservation(reservation_data: ReservationCreate, current_user: UserResponse = Depends(get_current_user)):
+    """Create a new hotel reservation"""
+    
+    # Validate dates
+    if reservation_data.check_in_date >= reservation_data.check_out_date:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Check-out date must be after check-in date"
+        )
+    
+    if reservation_data.check_in_date.date() < datetime.now().date():
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Check-in date cannot be in the past"
+        )
+    
+    # Validate guests
+    if reservation_data.guests < 1 or reservation_data.guests > 8:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Number of guests must be between 1 and 8"
+        )
+    
+    # Find hotel to get name and calculate price
+    hotels = [
+        {"id": "ritz-carlton-ny", "name": "The Ritz-Carlton New York", "base_price": 800},
+        {"id": "four-seasons-paris", "name": "Four Seasons Hotel George V", "base_price": 1200},
+        {"id": "burj-al-arab", "name": "Burj Al Arab", "base_price": 2000},
+        {"id": "aman-tokyo", "name": "Aman Tokyo", "base_price": 600},
+        {"id": "plaza-athenee", "name": "Hotel Plaza Athénée", "base_price": 1000},
+        {"id": "st-regis-bora", "name": "The St. Regis Bora Bora", "base_price": 1800},
+        {"id": "savoy-london", "name": "The Savoy London", "base_price": 700},
+        {"id": "oneonly-cape", "name": "One&Only Cape Town", "base_price": 900}
+    ]
+    
+    hotel = next((h for h in hotels if h["id"] == reservation_data.hotel_id), hotels[0])
+    
+    # Calculate total nights and price
+    total_nights = (reservation_data.check_out_date.date() - reservation_data.check_in_date.date()).days
+    
+    # Room type pricing multipliers
+    room_multipliers = {
+        "standard": 1.0,
+        "deluxe": 1.3,
+        "suite": 1.8,
+        "presidential": 2.5
+    }
+    
+    base_price = hotel["base_price"]
+    room_multiplier = room_multipliers.get(reservation_data.room_type.lower(), 1.0)
+    guest_multiplier = 1.0 + (max(0, reservation_data.guests - 2) * 0.2)  # Extra charge for >2 guests
+    
+    total_price = base_price * room_multiplier * guest_multiplier * total_nights
+    
+    # Create reservation
+    reservation = Reservation(
+        user_id=current_user.id,
+        hotel_id=reservation_data.hotel_id,
+        hotel_name=hotel["name"],
+        check_in_date=reservation_data.check_in_date,
+        check_out_date=reservation_data.check_out_date,
+        guests=reservation_data.guests,
+        room_type=reservation_data.room_type,
+        special_requests=reservation_data.special_requests or "",
+        total_nights=total_nights,
+        total_price=round(total_price, 2)
+    )
+    
+    # Save to database
+    await db.reservations.insert_one(reservation.dict())
+    
+    # Return response
+    return ReservationResponse(**reservation.dict())
+
+@api_router.get("/reservations", response_model=List[ReservationResponse])
+async def get_user_reservations(current_user: UserResponse = Depends(get_current_user)):
+    """Get user's reservations"""
+    reservations = await db.reservations.find({"user_id": current_user.id}).to_list(1000)
+    return [ReservationResponse(**reservation) for reservation in reservations]
+
 # Include the router in the main app
 app.include_router(api_router)
 
