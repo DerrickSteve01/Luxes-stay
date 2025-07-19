@@ -88,6 +88,42 @@ class Hotel(BaseModel):
     amenities: List[str]
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
+class Reservation(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    user_id: str
+    hotel_id: str
+    hotel_name: str
+    check_in_date: datetime
+    check_out_date: datetime
+    guests: int
+    room_type: str
+    special_requests: Optional[str] = ""
+    total_nights: int
+    total_price: float
+    status: str = "confirmed"  # "confirmed", "pending", "cancelled"
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+class ReservationCreate(BaseModel):
+    hotel_id: str
+    check_in_date: datetime
+    check_out_date: datetime
+    guests: int
+    room_type: str
+    special_requests: Optional[str] = ""
+
+class ReservationResponse(BaseModel):
+    id: str
+    hotel_name: str
+    check_in_date: datetime
+    check_out_date: datetime
+    guests: int
+    room_type: str
+    special_requests: str
+    total_nights: int
+    total_price: float
+    status: str
+    created_at: datetime
+
 # Helper functions
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
