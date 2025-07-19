@@ -86,6 +86,14 @@ const StarRating: React.FC<{ rating: number }> = ({ rating }) => {
 const HotelCard: React.FC<{ hotel: Hotel }> = ({ hotel }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
+  const navigate = useNavigate();
+
+  const handleBookNow = () => {
+    const hotelId = hotel.name.toLowerCase()
+      .replace(/\s+/g, '-')
+      .replace(/[^a-z0-9-]/g, '');
+    navigate(`/reservation?hotel=${hotelId}`);
+  };
 
   return (
     <article 
