@@ -263,6 +263,87 @@ async def get_status_checks(current_user: UserResponse = Depends(get_current_use
     status_checks = await db.status_checks.find().to_list(1000)
     return [StatusCheck(**status_check) for status_check in status_checks]
 
+@api_router.get("/hotels", response_model=List[Hotel])
+async def get_hotels():
+    """Get list of luxury hotels - public endpoint for demo"""
+    # Sample luxury hotel data
+    luxury_hotels = [
+        Hotel(
+            name="The Ritz-Carlton New York",
+            location="New York, NY",
+            rating=4.8,
+            price_tier="Ultra-Luxury",
+            thumbnail_image="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=400&h=300&fit=crop&crop=faces",
+            description="Iconic luxury hotel in the heart of Manhattan with world-class service.",
+            amenities=["Spa", "Fine Dining", "Concierge", "Fitness Center", "Business Center"]
+        ),
+        Hotel(
+            name="Four Seasons Hotel George V",
+            location="Paris, France",
+            rating=4.9,
+            price_tier="Presidential",
+            thumbnail_image="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=400&h=300&fit=crop&crop=faces",
+            description="Palace hotel offering unparalleled luxury near the Champs-Élysées.",
+            amenities=["Michelin Star Restaurant", "Luxury Spa", "Personal Butler", "Private Gardens"]
+        ),
+        Hotel(
+            name="Burj Al Arab",
+            location="Dubai, UAE",
+            rating=4.7,
+            price_tier="Ultra-Luxury",
+            thumbnail_image="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=400&h=300&fit=crop&crop=faces",
+            description="The world's most luxurious hotel, shaped like the sail of a dhow.",
+            amenities=["Private Beach", "Helicopter Service", "Royal Suite", "Underwater Restaurant"]
+        ),
+        Hotel(
+            name="Aman Tokyo",
+            location="Tokyo, Japan",
+            rating=4.6,
+            price_tier="Luxury",
+            thumbnail_image="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=400&h=300&fit=crop&crop=faces",
+            description="Serene urban sanctuary combining traditional Japanese aesthetics with modern luxury.",
+            amenities=["Traditional Spa", "Zen Gardens", "Kaiseki Restaurant", "Tea Ceremony"]
+        ),
+        Hotel(
+            name="Hotel Plaza Athénée",
+            location="Paris, France",
+            rating=4.8,
+            price_tier="Ultra-Luxury",
+            thumbnail_image="https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=400&h=300&fit=crop&crop=faces",
+            description="Parisian palace hotel with breathtaking views of the Eiffel Tower.",
+            amenities=["Eiffel Tower Views", "Haute Couture Shopping", "Alain Ducasse Restaurant", "Dior Spa"]
+        ),
+        Hotel(
+            name="The St. Regis Bora Bora",
+            location="Bora Bora, French Polynesia",
+            rating=4.9,
+            price_tier="Presidential",
+            thumbnail_image="https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=400&h=300&fit=crop&crop=faces",
+            description="Overwater villas in a tropical paradise with crystal-clear lagoon views.",
+            amenities=["Overwater Villas", "Private Beach", "Lagoon Spa", "Sunset Sailing"]
+        ),
+        Hotel(
+            name="The Savoy London",
+            location="London, UK",
+            rating=4.7,
+            price_tier="Luxury",
+            thumbnail_image="https://images.unsplash.com/photo-1551632811-561732d1e306?w=400&h=300&fit=crop&crop=faces",
+            description="Historic luxury hotel on the Strand with legendary afternoon tea service.",
+            amenities=["Thames River Views", "Afternoon Tea", "Art Deco Bar", "Royal Suite"]
+        ),
+        Hotel(
+            name="One&Only Cape Town",
+            location="Cape Town, South Africa",
+            rating=4.6,
+            price_tier="Ultra-Luxury",
+            thumbnail_image="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop&crop=faces",
+            description="Contemporary luxury resort with stunning views of Table Mountain.",
+            amenities=["Mountain Views", "Marina Access", "Wine Cellar", "Spa Island"]
+        )
+    ]
+    
+    return luxury_hotels
+
 # Include the router in the main app
 app.include_router(api_router)
 
