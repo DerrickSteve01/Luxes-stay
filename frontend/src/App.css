@@ -63,6 +63,32 @@
   @apply animate-spin rounded-full border-2 border-gray-300 border-t-blue-600;
 }
 
+/* Animation delays for luxury hotel effects */
+.animation-delay-150 {
+  animation-delay: 150ms;
+}
+
+.animation-delay-300 {
+  animation-delay: 300ms;
+}
+
+.animation-delay-600 {
+  animation-delay: 600ms;
+}
+
+/* Line clamp for text truncation */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Loading spinner */
+.spinner {
+  @apply animate-spin rounded-full border-2 border-gray-300 border-t-blue-600;
+}
+
 /* Error messages */
 .error-message {
   @apply text-sm text-red-600 flex items-center mt-1;
