@@ -206,10 +206,11 @@ const HotelCard: React.FC<{ hotel: Hotel }> = ({ hotel }) => {
         {/* CTA Button */}
         <div className="mt-6">
           <button 
+            onClick={handleBookNow}
             className="w-full py-3 px-6 bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-400 hover:to-amber-500 text-black font-bold text-sm sm:text-base lg:text-lg rounded-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-gray-900 shadow-lg hover:shadow-yellow-500/25"
-            aria-label={`View details for ${hotel.name}`}
+            aria-label={`Book reservation at ${hotel.name}`}
           >
-            Experience Luxury
+            Book Now
           </button>
         </div>
       </div>
