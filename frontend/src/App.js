@@ -305,6 +305,15 @@ const Login = () => {
                 Sign up
               </button>
             </p>
+            <p className="text-xs text-gray-500 mt-2">
+              Try the{' '}
+              <button
+                onClick={() => navigate('/login-ts')}
+                className="text-purple-600 hover:text-purple-800 font-medium underline"
+              >
+                TypeScript version
+              </button>
+            </p>
           </div>
         </div>
       </div>
