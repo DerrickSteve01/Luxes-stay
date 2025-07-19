@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, Navigate, useNavigate } from "react-route
 import axios from "axios";
 import TypeScriptLogin from "./components/TypeScriptLogin";
 import LuxuryHotels from "./components/LuxuryHotels";
+import HotelReservation from "./components/HotelReservation";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
